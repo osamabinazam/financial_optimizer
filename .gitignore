@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+env/
+venv/
+build/
+dist/
+*.egg-info/
+
+# PyQt5 uic generated Python files
+*.py~
+
+# Mac OS X
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# IDEs and Editors
+.vscode/
+.idea/
