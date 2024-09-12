@@ -23,24 +23,23 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.file_import_thread = None
         self._create_menu()
-        self.setWindowTitle("Financial Optimizer")          # Set the window title
+        self.setWindowTitle("Financial Optimizer")  # Set the window title
         self.setGeometry(100, 100, 800, 600)
         self.delete_thread = None  # Initialize thread instance to None# Set the window dimensions
         self.file_paths = None  # Initialize folder path to None
-        self.central_widget = QStackedWidget()              # Create a QStackedWidget to hold multiple screens in the central widget area
-        self.setCentralWidget(self.central_widget)          # Set the central widget of the main window
+        self.central_widget = QStackedWidget()  # Create a QStackedWidget to hold multiple screens in the central widget area
+        self.setCentralWidget(self.central_widget)  # Set the central widget of the main window
 
         # Create instances of your screens
         self.home_screen = HomeScreenWidget(self)
         self.data_visualization_screen = DataVisualizationWidget(self)  # Pass the main window instance to the screen
 
         # Add screens to the QStackedWidget
-        self.central_widget.addWidget(self.home_screen)                 # Add the home screen
-        self.central_widget.addWidget(self.data_visualization_screen)   # Add the data visualization screen
+        self.central_widget.addWidget(self.home_screen)  # Add the home screen
+        self.central_widget.addWidget(self.data_visualization_screen)  # Add the data visualization screen
 
         # Show the home screen initially
         self.central_widget.setCurrentWidget(self.data_visualization_screen)
-
 
     def _create_menu(self):
         """
@@ -82,10 +81,6 @@ class MainWindow(QMainWindow):
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
 
-
-
-
-
     def _import_data(self):
         """
         Import data action handler.
@@ -99,7 +94,8 @@ class MainWindow(QMainWindow):
             display_message_box(self, "Cancelled", "No folder selected")
             return
 
-        self.file_paths = [os.path.join(folder_path, file) for file in os.listdir(folder_path) if file.endswith(('.csv', '.txt'))]
+        self.file_paths = [os.path.join(folder_path, file) for file in os.listdir(folder_path) if
+                           file.endswith(('.csv', '.txt'))]
         if not self.file_paths:
             display_message_box(self, "No Files Found", "The selected folder contains no CSV or TXT files.")
             return
@@ -148,8 +144,6 @@ class MainWindow(QMainWindow):
         self.file_import_thread.finished.connect(self.on_import_finished)
         self.file_import_thread.start()
 
-
-
     def on_import_finished(self):
         """
         Handle actions when the import process is finished.
@@ -159,8 +153,6 @@ class MainWindow(QMainWindow):
         self.data_visualization_screen.load_data_form_database()  # Load data into the data visualization screen
         # self.navigate_to(self.data_visualization_screen)
 
-
-
     def _export_data(self):
 
         """
@@ -168,6 +160,7 @@ class MainWindow(QMainWindow):
         :return: None
         """
         print("Export data action triggered.")
+
     def navigate_to(self, screen):
         """
         Navigate to the specified screen.
