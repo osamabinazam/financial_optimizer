@@ -124,6 +124,15 @@ QComboBox#SymbolComboBox {
     border-radius: 5px;
     width: 200px;
 }
+/* TimeframeComboBox */
+QComboBox#TimeframeComboBox {
+    font-size: 12px;
+    padding: 8px;
+    color: #777;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    width: 200px;
+}
 
 /* QTableWidget Styling */
 QTableWidget#DataTable {
