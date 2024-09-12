@@ -19,14 +19,14 @@ class FileImportManager:
         with Pool(num_processors) as pool:
             results = pool.map(self.process_file, self.file_paths)
             # Check results to see if any error occurred
-            for result in results:
-                print("Result: ",result)
+            # for result in results:
+            #     print("Result: ",result)
 
     def process_file(self, file_info):
         file_path = file_info
         process_id = current_process().pid
         try:
-            print(f"Process ID {process_id} is processing {file_path}")
+            # print(f"Process ID {process_id} is processing {file_path}")
             column_names = ['Symbol', 'Date', 'Open', 'High', 'Low', 'Close', 'Volume']
             df = pd.read_csv(file_path, header=None, names=column_names)
             df['Date'] = pd.to_datetime(df['Date'])
@@ -34,7 +34,7 @@ class FileImportManager:
             # Insert data into the database
             self.insert_data(df)
 
-            print(f"File {file_path} processed and data written successfully.")
+            # print(f"File {file_path} processed and data written successfully.")
 
         except Exception as e:
             return f"Error processing file {file_path}: {e}"
@@ -49,7 +49,7 @@ class FileImportManager:
             table_name = 'stock_prices'
             batch_size = 1000
             self.questdb_service.insert_data(conf, table_name, data, batch_size)
-            print(f"Data inserted to database for table {table_name}", flush=True)
+            # print(f"Data inserted to database for table {table_name}", flush=True)
         except Exception as e:
             print(f"Error inserting data into the database: {e}", file=sys.stderr, flush=True)
 
