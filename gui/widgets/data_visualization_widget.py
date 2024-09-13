@@ -1,30 +1,23 @@
-from threading import Thread
+import multiprocessing as mp
 
+from PyQt5.QtCore import Qt, QMutex
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtSvg import QSvgWidget
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QTableWidget, QTableWidgetItem, QComboBox, QLabel, \
-    QPushButton, QHeaderView, QFileDialog, QSizePolicy, QSpacerItem, QProgressBar
-from PyQt5.QtCore import Qt, QMutex, QThread
-import pandas as pd
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QTableWidgetItem, QLabel, \
+    QSizePolicy, QSpacerItem
 
 from config.data_loader_thread import DataLoaderThread
 from config.database_query_thread import DatabaseQueryThread
-from gui.widgets.export_dialog_widget import ExportDialog
-from gui.widgets.filter_dialog_widget import FilterDialog
+from utils.texts_utils import description
 from utils.texts_utils import get_text_for_risk_metrics_combo_box, get_text_for_algorithms_combo_box, \
     get_text_for_time_frames_combo_box
-from utils.texts_utils import description
 from utils.ui_utils import create_combo_box, create_button, create_label, create_table
-import multiprocessing as mp
-from services.questdb_service import QuestDBService
 
 
 class DataVisualizationWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # Data
-        # self.update_progress = None
 
         self.timeframe_combo_box = None
         self.header_layout = None
@@ -381,3 +374,25 @@ class DataVisualizationWidget(QWidget):
         self.timeframe_combo_box.setCurrentIndex(0)
 
         print("Finish Reset")
+
+    def _run_selected_algorithm(self):
+        """
+        Run the selected algorithm on the data.
+        """
+        # Get the selected risk metric and algorithm
+        risk_metric = self.risk_matrics_combo_box.currentText()
+        algorithm = self.algorithm_combo_box.currentText()
+        timeframe = self.timeframe_combo_box.currentText()
+        benchmark_symbol = self.symbol_combo_box.currentText()
+
+        # Get the data to run the algorithm on
+        data = self.data
+
+        # Ensure the data is not empty
+        if data is None or len(data) == 0:
+            print("No data to run the algorithm on.")
+            return
+
+        print(f"Running algorithm: {algorithm} with risk metric: {risk_metric}\n")
+
+        print(data.head())
